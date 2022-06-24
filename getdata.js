@@ -88,3 +88,54 @@
           }
       })
   }
+
+  function SearchEmp() {
+      $("#tableId > tbody").empty();
+
+      var EmpId = $('#empId').val();
+      var EmpFirstname = $('#empName').val();
+      var EmpLastname = $('#empLname').val();
+
+      var dataSet = [];
+
+      if (EmpId == '' && EmpFirstname == '' && EmpLastname == '') {
+          SearchData();
+      } else {
+          $.ajax({
+              url: 'backend/SearchDetail.php',
+              type: 'post',
+              dataType: "json",
+              data: {
+                  postEmpId: EmpId,
+                  postEmpFirstname: EmpFirstname,
+                  postEmpLastname: EmpLastname
+              },
+              success: function(data) {
+
+                  dataSet = data;
+                  var Ttable = $('#tableId').DataTable();
+                  Ttable.clear();
+                  let textdata = [];
+
+                  for (let i = 0; i < dataSet.emplist.length;) {
+                      var empdata = dataSet.emplist[i]
+                      var row = i;
+                      var tableSet = [
+                          empdata['employeeID'],
+                          empdata['firstName'],
+                          empdata['lastName'],
+                          empdata['issAdmin'],
+                          empdata['addBy'],
+                          empdata['addDate'],
+                          "<a id='btnEdit' class='btn btn-sm btn-warning' data-toggle='collapse' data-target='#edtdemo' onclick='edtFunc(" + row + ")'><span class='glyphicon glyphicon-edit'></span> Edit</a>" +
+                          "<a class='btn btn-sm btn-danger' id='deleteData' onclick='delFunc(" + empdata['employeeID'] + ")'><span class='glyphicon glyphicon-info-sign'></span> Delete</a>"
+                      ];
+                      textdata.push(tableSet);
+                      i++;
+                      // console.log(empdata);
+                  }
+                  Ttable.rows.add(textdata).draw();
+              }
+          })
+      }
+  }

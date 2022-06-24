@@ -5,22 +5,30 @@ function edtUserFunc() {
     var edtisadmin = $('#edtisadmin').val();
     var edtaddBy = $('#edtaddBy').val();
     var edtdate = $('#edtdate').val();
-    console.log("edtdate" + edtdate);
+    var tempDate = new Date(edtdate);
+    var formattedDate = [tempDate.getMonth() + 1, tempDate.getDate(), tempDate.getFullYear()].join('/');
 
     $.ajax({
-        url: 'backend/insertDel.php',
-        // url: 'http://localhost:8080/EmployeeUpdate',
+        url: 'backend/updateEmp.php',
         type: 'post',
+        dataType: "json",
         data: {
             postedtempID: edtempID,
             postedtempName: edtempName,
             postedtLName: edtLName,
             postedtisadmin: edtisadmin,
             postedtaddBy: edtaddBy,
-            postedtdate: edtdate
+            postedtdate: formattedDate
         },
         success: function(data) {
-            // location.reload();
+            console.log('success');
+            // if (data == "บันทึกสเร็จ") {
+            //     SearchData();
+            // }
         }
     })
+    SearchData();
+    setTimeout(() => {
+        location.reload();
+    }, 500);
 }

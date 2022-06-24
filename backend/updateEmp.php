@@ -1,12 +1,10 @@
 <?php
-$username = $_POST['postusername'];
-$password = $_POST['postpassword'];
-$employeeId = $_POST['postemployeeId'];
-$empFirstName = $_POST['postempFirstName'];
-$empLastName = $_POST['postempLastName'];
-$isAdmin = $_POST['postisAdmin'];
-$addBy = $_POST['postaddBy'];
-$addDate = $_POST['postaddDate'];
+$employeeId = $_POST['postedtempID'];
+$empFirstName = $_POST['postedtempName'];
+$empLastName = $_POST['postedtLName'];
+$isAdmin = $_POST['postedtisadmin'];
+$addBy = $_POST['postedtaddBy'];
+$addDate = $_POST['postedtdate'];
 
 
 // $url = "https://localhost:8080/EmployeeInsert";
@@ -26,15 +24,13 @@ $addDate = $_POST['postaddDate'];
 
 
 // API URL
-$url = 'http://localhost:8080/EmployeeInsert';
+$url = 'http://localhost:8080/EmployeeUpdate';
 
 // Create a new cURL resource
 $ch = curl_init($url);
 
 // Setup request to send json via POST
 $data = array(
-    'username' => "$username",
-    'password' => "$password",
     'employeeId' => "$employeeId",
     'empFirstName' => "$empFirstName",
     'empLastName' => "$empLastName",
@@ -59,6 +55,4 @@ $result = curl_exec($ch);
 
 // Close cURL resource
 curl_close($ch);
-
-echo $payload;
 ?>

@@ -6,6 +6,8 @@ function InsertUserFunc() {
     var empLastName = $('#empLastName').val();
     var addBy = $('#addBy').val();
     var addDate = $('#addDate').val();
+    var tempDate = new Date(addDate);
+    var formattedDate = [tempDate.getMonth() + 1, tempDate.getDate(), tempDate.getFullYear()].join('/');
     console.log(addDate);
 
     if ($("input[id='IsnotAdmin']:checked").val()) {
@@ -25,10 +27,11 @@ function InsertUserFunc() {
             postempLastName: empLastName,
             postisAdmin: isAdmin,
             postaddBy: addBy,
-            postaddDate: addDate
+            postaddDate: formattedDate
         },
         success: function(data) {
-            // location.reload();
+
         }
     })
+    location.reload();
 }
